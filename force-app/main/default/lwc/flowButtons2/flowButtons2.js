@@ -2,24 +2,24 @@ import { LightningElement, api, track } from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationBackEvent, FlowNavigationFinishEvent } from 'lightning/flowSupport';
 
 const BUTTON_GROUP_CLASS = 'slds-button-group';
-const VERTICAL_CLASS = 'slds-grid slds-grid_vertical slds-grid_align-center slds-grid_vertical-align-center slds-shrink-none';
-const HORIZONTAL = 'horizontal';
+const VERTICAL_CLASS = 'slds-grid slds-grid_vertical';
 const VERTICAL = 'vertical';
-const RIGHT = 'right';
 const BUTTON_PROPERTIES = ['Label', 'Value', 'DescriptionText'];
-const ORIENTATIONS = [HORIZONTAL, VERTICAL, 'toggle'];
 
 const ALIGNMENTS = [
     { input: 'left', value: 'slds-float_left' },
     { input: 'center', value: 'slds-align_absolute-center' },
     { input: 'right', value: 'slds-float_right', default: true }
 ];
+
+/* Not in use yet
 const COLOUR_VARIANTS = [
     { input: 'red', value: 'destructive' },
     { input: 'blue', value: 'brand' },
     { input: 'green', value: 'success' },
     { input: 'neutral', value: 'neutral', default: true }
 ];
+*/
 
 export default class FlowButtons2 extends LightningElement {
     /* SYSTEM INPUTS */
@@ -51,7 +51,6 @@ export default class FlowButtons2 extends LightningElement {
 
     @api doNotTransitionOnClick;
 
-
     @api
     get selectedValue() {
         return this._selectedValue;
@@ -62,15 +61,17 @@ export default class FlowButtons2 extends LightningElement {
         this.toggleButtons();
     }
 
+    /* PRIVATE VARIABLES */
     @track _selectedValue;
     @track selectedButton = {};
+    rendered;
 
     /* GETTERS */
     get isVertical() { return this.orientation === VERTICAL; }
 
     get buttonGroupClass() {
         let classList = [];
-        if (this.orientation == VERTICAL) {
+        if (this.isVertical) {
             classList.push(VERTICAL_CLASS);
         } else {
             if (this.groupAsToggle) {
@@ -99,7 +100,7 @@ export default class FlowButtons2 extends LightningElement {
         return buttons;
     }
 
-    rendered;
+    /* LIFECYCLE HOOKS */
     renderedCallback() {
         if (this.rendered) return;
         this.rendered = true;
@@ -130,6 +131,7 @@ export default class FlowButtons2 extends LightningElement {
         }
     }
 
+    /* ACTION FUNCTIONS */
     toggleButtons() {
         for (let buttonEl of this.template.querySelectorAll('button')) {
             if (buttonEl.dataset.index == this.selectedButton.index) {
@@ -142,7 +144,10 @@ export default class FlowButtons2 extends LightningElement {
         }
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 55b38e552f706340dda7a1957bc0da17675c3ade
     /* UTILITY FUNCTIONS */
     // Helper function used to map user-friendly input to a corresponding value
     // If no input or invalid input was found, look for a default value
