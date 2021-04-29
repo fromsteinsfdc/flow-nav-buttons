@@ -144,10 +144,6 @@ export default class FlowButtons2 extends LightningElement {
         }
     }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 55b38e552f706340dda7a1957bc0da17675c3ade
     /* UTILITY FUNCTIONS */
     // Helper function used to map user-friendly input to a corresponding value
     // If no input or invalid input was found, look for a default value
