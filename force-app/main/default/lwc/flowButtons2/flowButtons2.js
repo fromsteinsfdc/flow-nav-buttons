@@ -107,37 +107,17 @@ export default class FlowButtons2 extends LightningElement {
     }
 
     /* EVENT HANDLERS */
-    handleItemClick(event) {
-        let index = event.currentTarget.dataset.index;
-        if (this.selectedSlotIndex === index)
-            this.selectedSlotIndex = null;
-        else
-            this.selectedSlotIndex = index;
-
-        for (let item of this.template.querySelectorAll(DOT + ITEM_CLASS)) {
-            if (item.dataset.index === this.selectedSlotIndex)
-                item.classList.add(SELECTED_CLASS);
-            else
-                item.classList.remove(SELECTED_CLASS);
-        }
-        this.dispatchEvent(new FlowAttributeChangeEvent('startTime', this.selectedSlot.start));
-        this.dispatchEvent(new FlowAttributeChangeEvent('endTime', this.selectedSlot.finish));
-    }
-
     handleButtonClick(event) {
         let index = event.currentTarget.dataset.index;
-        console.log(index, event.currentTarget.dataset.index);
         if (index == this.selectedButton.index) {
             this.selectedButton = {};
         } else {
             this.selectedButton = this.buttons[index];
         }
-        console.log('this.selectedButton = ' + JSON.stringify(this.selectedButton));
         this.dispatchEvent(new FlowAttributeChangeEvent('selectedValue', this.selectedButton.Value));
         if (this.doNotTransitionOnClick) {
             this.toggleButtons();
         } else {
-            console.log('navigating!');
             if (this.selectedButton.Value.toLowerCase() === 'previous') {
                 this.dispatchEvent(new FlowNavigationBackEvent());
             } else {
@@ -158,21 +138,6 @@ export default class FlowButtons2 extends LightningElement {
             } else {
                 buttonEl.classList.add('slds-button_neutral');
                 buttonEl.classList.remove('slds-button_brand');
-            }
-        }
-    }
-
-    oldhandleButtonClick(event) {
-        let value = event.currentTarget.label;
-        this.selectedValue = value;
-        this.dispatchEvent(new FlowAttributeChangeEvent('selectedValue', value));
-        if (value.toLowerCase() === 'previous') {
-            this.dispatchEvent(new FlowNavigationBackEvent());
-        } else {
-            if (this.availableActions.find(action => action === 'FINISH')) {
-                this.dispatchEvent(new FlowNavigationFinishEvent());
-                this.dispatchEvent(new FlowNavigationNextEvent());
-            } else {
             }
         }
     }
