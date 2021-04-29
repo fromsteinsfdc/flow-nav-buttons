@@ -110,15 +110,14 @@ export default class FlowButtons2 extends LightningElement {
     /* EVENT HANDLERS */
     handleButtonClick(event) {
         let index = event.currentTarget.dataset.index;
-        if (index == this.selectedButton.index) {
-            this.selectedButton = {};
-        } else {
-            this.selectedButton = this.buttons[index];
-        }
+        // If the current selected button is being clicked again, deselect it. Otherwise, select the button that was just clicked
+        this.selectedButton = (index == this.selectedButton.index) ? {} : this.buttons[index];
+        
         this.dispatchEvent(new FlowAttributeChangeEvent('selectedValue', this.selectedButton.Value));
         if (this.doNotTransitionOnClick) {
             this.toggleButtons();
         } else {
+            // NAVIGATING            
             if (this.selectedButton.Value.toLowerCase() === 'previous') {
                 this.dispatchEvent(new FlowNavigationBackEvent());
             } else {
